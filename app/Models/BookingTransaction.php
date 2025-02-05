@@ -25,7 +25,7 @@ class BookingTransaction extends Model
     ];
     public function ticket(): BelongsTo
     {
-        return $this->belongsTo(Ticket::class, 'seller_id');
+        return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 }
 
