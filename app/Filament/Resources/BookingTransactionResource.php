@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\FormsComponent;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -22,6 +23,13 @@ class BookingTransactionResource extends Resource
     protected static ?string $model = BookingTransaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) BookingTransaction::where('is_paid', false)->count();
+    }
+
+    protected static ?string $navigationGroup = 'Customer';
 
     public static function form(Form $form): Form
     {
@@ -143,7 +151,24 @@ class BookingTransactionResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
 
+                Tables\Actions\Action::make('approve')
+                    ->label('Approve')
+                    ->action(function (BookingTransaction $record) {
+                        $record->is_paid = true;
+                        $record->save();
+
+                        // Trigger the custom notification
+                        Notification::make()
+                            ->title('Ticket Approved')
+                            ->success()
+                            ->body('The ticket has been successfully approved.')
+                            ->send();
+                    })
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->visible(fn (BookingTransaction $record) => !$record->is_paid),
             ])
+            
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

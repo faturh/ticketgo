@@ -23,6 +23,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Management';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -43,10 +45,10 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                 ->searchable(),
 
-                ImageColumn::make('icon')
+                Tables\Columns\ImageColumn::make('icon')
                 // ->circular(),
             ])
             ->filters([
