@@ -6,7 +6,7 @@ use App\Models\Ticket;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
-class TicketRepositoryApi implements TicketRepositoryInterface
+class TicketRepository implements TicketRepositoryInterface
 {
     public function getPopularTickets($limit = 4)
     {
