@@ -70,7 +70,7 @@ class BookingTransactionResource extends Resource
                             ->readonly()
                             ->helperText('Harga sudah include PPN 11%'),
                             ]),
-
+                            
                     Forms\Components\Wizard\Step::make('Customer Information')
                         ->schema([
                             Forms\Components\TextInput::make('name')
