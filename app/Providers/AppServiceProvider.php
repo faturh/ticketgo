@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Ticket;
+use App\Repositories\BookingRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\Contracts\BookingRepositoryInterface;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Repositories\TicketRepository;
 use Illuminate\Support\ServiceProvider;
@@ -16,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->app->singleton(TicketRepositoryInterface::class, TicketRepository::class);
+        $this->app->singleton(BookingRepositoryInterface::class, BookingRepository::class);
+        $this->app->singleton(CategoryRepositoryInterface::class, CategoryRepository::class);
     }
 
     /**
